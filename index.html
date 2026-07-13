@@ -8,120 +8,95 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-icon">☢</div>
-        <div><h1>Nuclear Quest 3D</h1><p>ภารกิจพิชิตโลกกัมมันตรังสี • เคมี ม.4</p></div>
-      </div>
-      <div class="student-box">
-        <input id="studentName" aria-label="ชื่อผู้เรียน" placeholder="พิมพ์ชื่อผู้เรียน">
-        <button id="saveName" class="small">บันทึก</button>
-        <span class="score-pill">⭐ <b id="score">0</b></span>
-      </div>
-    </header>
+<div id="app">
+<header class="topbar">
+  <div class="brand"><div class="brand-icon">☢</div><div><h1>Nuclear Quest 3D</h1><p>ห้องเรียน 3D Interactive เรื่องกัมมันตรังสี • เคมี ม.4</p></div></div>
+  <div class="student-box"><input id="studentName" aria-label="ชื่อผู้เรียน" placeholder="ชื่อ–สกุลผู้เรียน"><button id="saveName" class="small">บันทึกชื่อ</button><span class="score-pill">⭐ <b id="score">0</b> คะแนน</span></div>
+</header>
+<nav id="nav" class="mission-nav" aria-label="บทเรียน">
+  <button class="nav-btn active" data-page="radiation">1 การแผ่รังสี</button><button class="nav-btn" data-page="halfLife">2 ครึ่งชีวิต</button><button class="nav-btn" data-page="equations">3 สมการนิวเคลียร์</button><button class="nav-btn" data-page="reactions">4 ฟิชชัน–ฟิวชัน</button><button class="nav-btn" data-page="applications">5 การใช้ประโยชน์</button><button class="nav-btn" data-page="safety">6 ความปลอดภัย</button><button class="nav-btn" data-page="challenge">7 ภารกิจสรุป</button>
+</nav>
+<main>
+<section class="visual-column"><div id="scene" aria-label="แบบจำลองสามมิติ"></div><div class="scene-toolbar"><button id="resetCamera" class="small">⟳ มุมมองเริ่มต้น</button><button id="toggleMotion" class="small">⏸ หยุดการเคลื่อนไหว</button><span id="sceneHint">ลากเพื่อหมุน • เลื่อนเพื่อซูม • ทดลองปรับค่าจากเมนูด้านขวา</span></div><div id="toast" role="status" aria-live="polite"></div></section>
+<section class="panel-column">
 
-    <nav id="nav" class="mission-nav" aria-label="บทเรียน">
-      <button class="nav-btn active" data-page="radiation">1 รังสี</button>
-      <button class="nav-btn" data-page="halfLife">2 ครึ่งชีวิต</button>
-      <button class="nav-btn" data-page="equations">3 สมการนิวเคลียร์</button>
-      <button class="nav-btn" data-page="reactions">4 ฟิชชัน–ฟิวชัน</button>
-      <button class="nav-btn" data-page="applications">5 การใช้ประโยชน์</button>
-      <button class="nav-btn" data-page="safety">6 ความปลอดภัย</button>
-      <button class="nav-btn" data-page="challenge">7 ภารกิจสรุป</button>
-    </nav>
+<article class="page active" data-page-panel="radiation">
+  <div class="section-heading"><span>บทที่ 1</span><h2>การแผ่รังสีและสมบัติของรังสี</h2></div>
+  <div class="objective-card"><b>เป้าหมายการเรียนรู้</b><ul><li>อธิบายสาเหตุที่นิวเคลียสไม่เสถียรแผ่รังสี</li><li>เปรียบเทียบมวล ประจุ อำนาจก่อไอออน และอำนาจทะลุผ่านของ α, β และ γ</li><li>เลือกวัสดุกำบังให้เหมาะกับชนิดรังสี</li></ul></div>
+  <p>กัมมันตภาพรังสีคือปรากฏการณ์ที่นิวเคลียสไม่เสถียรสลายตัวเองเพื่อเข้าสู่สภาวะเสถียรมากขึ้น พร้อมปล่อยอนุภาคหรือพลังงานออกมา การสลายเกิดขึ้นเองและไม่ขึ้นกับอุณหภูมิ ความดัน หรือสถานะทางเคมีของสาร</p>
+  <div class="control-group"><label>1) เลือกชนิดรังสี</label><div class="button-grid three"><button data-rad="alpha" class="active">α แอลฟา</button><button data-rad="beta">β บีตา</button><button data-rad="gamma">γ แกมมา</button></div></div>
+  <div class="control-group"><label>2) เลือกวัสดุกำบัง</label><div class="button-grid four"><button data-shield="none">ไม่กั้น</button><button data-shield="paper" class="active">กระดาษ</button><button data-shield="aluminum">อะลูมิเนียม</button><button data-shield="lead">ตะกั่ว</button></div></div>
+  <div class="meter-card"><div><span>เครื่องตรวจรังสีจำลอง</span><strong id="cpm">0 CPM</strong></div><div class="meter"><i id="meterFill"></i></div></div>
+  <div id="radiationInfo" class="knowledge-card"></div>
+  <div class="fact-grid"><div><b>α</b><span>นิวเคลียสฮีเลียม ⁴₂He ประจุ +2 มวลมาก ก่อไอออนสูง เดินทางในอากาศได้สั้น</span></div><div><b>β⁻</b><span>อิเล็กตรอนพลังงานสูง ประจุ −1 เกิดจากนิวตรอนเปลี่ยนเป็นโปรตอน</span></div><div><b>γ</b><span>คลื่นแม่เหล็กไฟฟ้าพลังงานสูง ไม่มีมวล ไม่มีประจุ ทะลุผ่านสูง</span></div></div>
+  <details><summary>ความเข้าใจสำคัญ</summary><p>อำนาจก่อไอออนเรียงจากมากไปน้อยคือ α &gt; β &gt; γ แต่อำนาจทะลุผ่านกลับกันคือ γ &gt; β &gt; α การเลือกวัสดุกำบังต้องพิจารณาทั้งชนิดรังสี ความหนาแน่น และความหนาของวัสดุ</p></details>
+  <div class="task-card"><b>ภารกิจ</b><p>เลือกรังสีชนิดหนึ่งและเลือกวัสดุกำบังที่เหมาะสมที่สุด จากนั้นกดตรวจคำตอบ</p><button id="radiationTask" class="primary">ตรวจคำตอบภารกิจรังสี</button></div>
+</article>
 
-    <main>
-      <section class="visual-column">
-        <div id="scene" aria-label="แบบจำลองสามมิติ"></div>
-        <div class="scene-toolbar">
-          <button id="resetCamera" class="small">⟳ มุมมองเริ่มต้น</button>
-          <button id="toggleMotion" class="small">⏸ หยุดการเคลื่อนไหว</button>
-          <span id="sceneHint">ลากเพื่อหมุน • เลื่อนเพื่อซูม</span>
-        </div>
-        <div id="toast" role="status" aria-live="polite"></div>
-      </section>
+<article class="page" data-page-panel="halfLife">
+  <div class="section-heading"><span>บทที่ 2</span><h2>ครึ่งชีวิตและกราฟการสลาย</h2></div>
+  <div class="objective-card"><b>เป้าหมายการเรียนรู้</b><ul><li>อธิบายความหมายของครึ่งชีวิต</li><li>คำนวณปริมาณสารที่เหลือเมื่อเวลาผ่านไป</li><li>อ่านและแปลความหมายกราฟการสลายแบบเอ็กซ์โพเนนเชียล</li></ul></div>
+  <p>ครึ่งชีวิตคือเวลาที่ทำให้จำนวนนิวเคลียสกัมมันตรังสีลดลงเหลือครึ่งหนึ่งของค่าเริ่มต้น เป็นสมบัติเฉพาะของแต่ละไอโซโทป เช่น I-131 มีครึ่งชีวิตประมาณ 8.02 วัน ส่วน C-14 มีครึ่งชีวิตประมาณ 5,730 ปี</p>
+  <label>เลือกไอโซโทป<select id="isotope"></select></label><label>จำนวนเริ่มต้น N₀<input id="n0" type="number" value="1000" min="1" max="1000000"></label><label>เวลาที่ผ่านไป <span id="timeValue">0</span> <span id="timeUnitLabel">วัน</span><input id="time" type="range" min="0" max="100" step="0.1" value="0"></label>
+  <div class="stat-grid"><div><span>ครึ่งชีวิต</span><strong id="halfLifeValue">–</strong></div><div><span>จำนวนที่เหลือ</span><strong id="remaining">–</strong></div><div><span>สลายแล้ว</span><strong id="decayed">–</strong></div><div><span>ร้อยละคงเหลือ</span><strong id="percent">–</strong></div></div>
+  <canvas id="chart" width="760" height="330"></canvas><p class="formula">N = N₀(1/2)<sup>t/t½</sup></p>
+  <div class="worked-example"><b>ตัวอย่าง</b><p>ถ้ามี I-131 เริ่มต้น 80 mg เมื่อผ่านไป 24.06 วัน หรือ 3 ครึ่งชีวิต จะเหลือ 80 × (1/2)³ = 10 mg</p></div>
+  <details><summary>ข้อควรจำ</summary><ul><li>ผ่าน 1 ครึ่งชีวิต เหลือ 50%</li><li>ผ่าน 2 ครึ่งชีวิต เหลือ 25%</li><li>ผ่าน 3 ครึ่งชีวิต เหลือ 12.5%</li><li>กราฟลดลงต่อเนื่อง แต่ในทางคณิตศาสตร์ไม่ลดถึงศูนย์ทันที</li></ul></details>
+  <button id="halfLifeTask" class="primary">สุ่มโจทย์ครึ่งชีวิต</button><div id="halfLifeQuestion" class="quiz-box hidden"></div>
+</article>
 
-      <section class="panel-column">
-        <article class="page active" data-page-panel="radiation">
-          <div class="section-heading"><span>บทที่ 1</span><h2>การแผ่รังสีและอำนาจทะลุผ่าน</h2></div>
-          <p>เลือกชนิดรังสีและวัสดุกำบัง แล้วสังเกตจำนวนอนุภาคที่ผ่านเครื่องตรวจจับ</p>
-          <div class="control-group"><label>ชนิดรังสี</label><div class="button-grid three">
-            <button data-rad="alpha" class="active">α แอลฟา</button><button data-rad="beta">β บีตา</button><button data-rad="gamma">γ แกมมา</button>
-          </div></div>
-          <div class="control-group"><label>วัสดุกำบัง</label><div class="button-grid four">
-            <button data-shield="none">ไม่กั้น</button><button data-shield="paper" class="active">กระดาษ</button><button data-shield="aluminum">อะลูมิเนียม</button><button data-shield="lead">ตะกั่ว</button>
-          </div></div>
-          <div class="meter-card"><div><span>เครื่องตรวจรังสี</span><strong id="cpm">0 CPM</strong></div><div class="meter"><i id="meterFill"></i></div></div>
-          <div id="radiationInfo" class="knowledge-card"></div>
-          <button id="radiationTask" class="primary">ตรวจคำตอบภารกิจรังสี</button>
-        </article>
+<article class="page" data-page-panel="equations">
+  <div class="section-heading"><span>บทที่ 3</span><h2>การเขียนสมการนิวเคลียร์</h2></div>
+  <div class="objective-card"><b>เป้าหมายการเรียนรู้</b><ul><li>เขียนสัญลักษณ์นิวเคลียร์ ᴬZX</li><li>ดุลเลขมวล A และเลขอะตอม Z</li><li>อธิบายการเปลี่ยนแปลงของนิวเคลียสในแต่ละชนิดการสลาย</li></ul></div>
+  <p>สมการนิวเคลียร์ต้องรักษาผลรวมเลขมวลและผลรวมเลขอะตอมทั้งสองข้างให้เท่ากันเสมอ แม้ธาตุจะเปลี่ยนชนิดก็ตาม</p>
+  <div class="button-grid five decay-buttons"><button data-decay="alpha" class="active">α</button><button data-decay="betaMinus">β⁻</button><button data-decay="betaPlus">β⁺</button><button data-decay="gamma">γ</button><button data-decay="capture">EC</button></div>
+  <div id="equationDemo" class="equation-card"></div><div class="rule-grid"><div><b>การเปลี่ยนเลขมวล A</b><span id="massRule"></span></div><div><b>การเปลี่ยนเลขอะตอม Z</b><span id="atomicRule"></span></div></div>
+  <div class="decay-notes"><div><b>α decay</b><span>A ลด 4, Z ลด 2</span></div><div><b>β⁻ decay</b><span>A คงเดิม, Z เพิ่ม 1</span></div><div><b>β⁺ decay</b><span>A คงเดิม, Z ลด 1</span></div><div><b>γ emission</b><span>A และ Z คงเดิม แต่พลังงานลดลง</span></div><div><b>Electron capture</b><span>A คงเดิม, Z ลด 1</span></div></div>
+  <div class="worked-example"><b>ตัวอย่างแอลฟา</b><p>²³⁸₉₂U → ²³⁴₉₀Th + ⁴₂He ตรวจสอบได้ว่า 238 = 234 + 4 และ 92 = 90 + 2</p></div>
+  <div id="equationQuiz" class="quiz-box"></div><button id="newEquation" class="primary">สร้างโจทย์ใหม่</button>
+</article>
 
-        <article class="page" data-page-panel="halfLife">
-          <div class="section-heading"><span>บทที่ 2</span><h2>เครื่องจำลองครึ่งชีวิต</h2></div>
-          <label>เลือกไอโซโทป<select id="isotope"></select></label>
-          <label>จำนวนเริ่มต้น<input id="n0" type="number" value="1000" min="1" max="1000000"></label>
-          <label>เวลาที่ผ่านไป <span id="timeValue">0</span> วัน<input id="time" type="range" min="0" max="100" step="0.1" value="0"></label>
-          <div class="stat-grid"><div><span>ครึ่งชีวิต</span><strong id="halfLifeValue">–</strong></div><div><span>จำนวนที่เหลือ</span><strong id="remaining">–</strong></div><div><span>สลายแล้ว</span><strong id="decayed">–</strong></div><div><span>ร้อยละคงเหลือ</span><strong id="percent">–</strong></div></div>
-          <canvas id="chart" width="760" height="330"></canvas>
-          <p class="formula">N = N₀(1/2)<sup>t/t½</sup></p>
-          <button id="halfLifeTask" class="primary">สุ่มโจทย์ครึ่งชีวิต</button>
-          <div id="halfLifeQuestion" class="quiz-box hidden"></div>
-        </article>
+<article class="page" data-page-panel="reactions">
+  <div class="section-heading"><span>บทที่ 4</span><h2>ปฏิกิริยานิวเคลียร์: ฟิชชันและฟิวชัน</h2></div>
+  <div class="objective-card"><b>เป้าหมายการเรียนรู้</b><ul><li>เปรียบเทียบหลักการของฟิชชันและฟิวชัน</li><li>อธิบายปฏิกิริยาลูกโซ่และบทบาทของนิวตรอน</li><li>เชื่อมโยงมวลพร่องกับพลังงาน E = mc²</li></ul></div>
+  <div class="tabs"><button data-reaction="fission" class="active">Nuclear Fission</button><button data-reaction="fusion">Nuclear Fusion</button></div><div id="reactionText" class="knowledge-card"></div>
+  <label>พลังงาน/สภาวะเริ่มต้น <span id="energyValue">50</span>%<input id="energy" type="range" min="0" max="100" value="50"></label><button id="launchReaction" class="primary">▶ เริ่มปฏิกิริยา 3D</button>
+  <div class="compare-table"><div><b>หัวข้อ</b><b>ฟิชชัน</b><b>ฟิวชัน</b></div><div><span>หลักการ</span><span>นิวเคลียสหนักแตกตัว</span><span>นิวเคลียสเบารวมตัว</span></div><div><span>ตัวอย่าง</span><span>U-235 + n</span><span>²H + ³H</span></div><div><span>เงื่อนไข</span><span>นิวตรอนกระตุ้นและมวลวิกฤต</span><span>อุณหภูมิและความดันสูงมาก</span></div><div><span>ผลิตภัณฑ์</span><span>เศษนิวเคลียส นิวตรอน พลังงาน</span><span>ฮีเลียม นิวตรอน พลังงาน</span></div><div><span>การใช้งาน</span><span>โรงไฟฟ้านิวเคลียร์</span><span>ดวงอาทิตย์และงานวิจัยพลังงาน</span></div></div>
+  <details><summary>ปฏิกิริยาลูกโซ่คืออะไร</summary><p>นิวตรอนที่ปล่อยจากฟิชชันสามารถชน U-235 อะตอมอื่น ทำให้เกิดฟิชชันต่อเนื่อง หากควบคุมด้วยแท่งควบคุมจะใช้ผลิตพลังงาน แต่หากไม่ควบคุมอัตราปฏิกิริยาอาจเพิ่มขึ้นอย่างรวดเร็ว</p></details>
+  <details><summary>เหตุใดจึงเกิดพลังงานมาก</summary><p>มวลรวมของผลิตภัณฑ์น้อยกว่ามวลรวมก่อนเกิดปฏิกิริยาเล็กน้อย มวลที่หายไปหรือมวลพร่องเปลี่ยนเป็นพลังงานตามสมการ E = mc²</p></details>
+</article>
 
-        <article class="page" data-page-panel="equations">
-          <div class="section-heading"><span>บทที่ 3</span><h2>สมการนิวเคลียร์</h2></div>
-          <p>เลือกชนิดการสลาย ระบบจะแสดงการเปลี่ยนเลขมวลและเลขอะตอม</p>
-          <div class="button-grid five decay-buttons">
-            <button data-decay="alpha" class="active">α</button><button data-decay="betaMinus">β⁻</button><button data-decay="betaPlus">β⁺</button><button data-decay="gamma">γ</button><button data-decay="capture">EC</button>
-          </div>
-          <div id="equationDemo" class="equation-card"></div>
-          <div class="rule-grid"><div><b>เลขมวล A</b><span id="massRule"></span></div><div><b>เลขอะตอม Z</b><span id="atomicRule"></span></div></div>
-          <div id="equationQuiz" class="quiz-box"></div>
-          <button id="newEquation" class="primary">สร้างโจทย์ใหม่</button>
-        </article>
+<article class="page" data-page-panel="applications">
+  <div class="section-heading"><span>บทที่ 5</span><h2>การใช้ประโยชน์ของไอโซโทปกัมมันตรังสี</h2></div>
+  <div class="objective-card"><b>เป้าหมายการเรียนรู้</b><ul><li>ยกตัวอย่างการใช้ไอโซโทปในแพทย์ เกษตร อุตสาหกรรม และโบราณคดี</li><li>เชื่อมโยงครึ่งชีวิตและชนิดรังสีกับการเลือกใช้งาน</li><li>วิเคราะห์ประโยชน์และความเสี่ยงอย่างสมดุล</li></ul></div>
+  <div id="applicationCards" class="application-grid"></div>
+  <div class="application-detail-list"><details><summary>การแพทย์</summary><p>Tc-99m ใช้สร้างภาพอวัยวะเพราะปล่อยแกมมาและมีครึ่งชีวิตสั้น ส่วน I-131 ใช้ตรวจและรักษาความผิดปกติของต่อมไทรอยด์</p></details><details><summary>การเกษตรและอาหาร</summary><p>ใช้รังสีทำหมันแมลงศัตรูพืช ชักนำการกลายพันธุ์เพื่อปรับปรุงพันธุ์ และฉายรังสีอาหารเพื่อลดจุลินทรีย์ โดยต้องควบคุมปริมาณตามมาตรฐาน</p></details><details><summary>อุตสาหกรรม</summary><p>ใช้ Co-60 หรือแหล่งรังสีอื่นตรวจรอยเชื่อม วัดความหนา ตรวจการรั่ว และเป็นสารติดตามในระบบท่อ</p></details><details><summary>โบราณคดีและธรณีวิทยา</summary><p>C-14 ใช้หาอายุซากสิ่งมีชีวิตที่เคยมีชีวิต ส่วนไอโซโทปที่มีครึ่งชีวิตยาวกว่าใช้ศึกษาอายุหินและโลก</p></details></div>
+  <p>แตะการ์ดเพื่ออ่านข้อมูล แล้วทำเกมจับคู่ไอโซโทปกับการใช้งาน</p><div id="applicationQuiz" class="quiz-box"></div><button id="newApplication" class="primary">โจทย์จับคู่ใหม่</button>
+</article>
 
-        <article class="page" data-page-panel="reactions">
-          <div class="section-heading"><span>บทที่ 4</span><h2>ฟิชชันและฟิวชัน</h2></div>
-          <div class="tabs"><button data-reaction="fission" class="active">Nuclear Fission</button><button data-reaction="fusion">Nuclear Fusion</button></div>
-          <div id="reactionText" class="knowledge-card"></div>
-          <label>พลังงาน/สภาวะเริ่มต้น <span id="energyValue">50</span>%<input id="energy" type="range" min="0" max="100" value="50"></label>
-          <button id="launchReaction" class="primary">▶ เริ่มปฏิกิริยา 3D</button>
-          <div class="compare-table"><div><b>หัวข้อ</b><b>ฟิชชัน</b><b>ฟิวชัน</b></div><div><span>หลักการ</span><span>นิวเคลียสหนักแตกตัว</span><span>นิวเคลียสเบารวมตัว</span></div><div><span>ตัวอย่าง</span><span>U-235</span><span>D + T</span></div><div><span>เงื่อนไข</span><span>นิวตรอนกระตุ้น</span><span>อุณหภูมิสูงมาก</span></div></div>
-        </article>
+<article class="page" data-page-panel="safety">
+  <div class="section-heading"><span>บทที่ 6</span><h2>ความปลอดภัยจากรังสี</h2></div>
+  <div class="objective-card"><b>เป้าหมายการเรียนรู้</b><ul><li>ใช้หลักเวลา–ระยะทาง–วัสดุกำบังเพื่อลดการรับรังสี</li><li>อธิบายการปนเปื้อนและการได้รับรังสีจากภายนอก</li><li>เลือกวิธีตอบสนองต่อสถานการณ์เสี่ยงอย่างเหมาะสม</li></ul></div>
+  <div class="safety-principles"><div>⏱<b>เวลา</b><span>อยู่ใกล้แหล่งรังสีให้น้อยที่สุด</span></div><div>↔<b>ระยะทาง</b><span>เพิ่มระยะห่าง ความเข้มลดลงมาก</span></div><div>🛡<b>กำบัง</b><span>เลือกวัสดุตามชนิดรังสี</span></div></div>
+  <p>หลัก ALARA หมายถึงการรักษาปริมาณรังสีให้ต่ำเท่าที่สามารถทำได้อย่างสมเหตุสมผล โดยใช้การวางแผนงาน อุปกรณ์ตรวจวัด และอุปกรณ์ป้องกันที่เหมาะสม</p>
+  <label>เวลาอยู่ในพื้นที่ <span id="exposureTimeValue">10</span> นาที<input id="exposureTime" type="range" min="1" max="120" value="10"></label><label>ระยะห่าง <span id="distanceValue">2</span> เมตร<input id="distance" type="range" min="0.5" max="10" step="0.5" value="2"></label><label>วัสดุกำบัง<select id="safetyShield"><option value="1">ไม่มี</option><option value="0.7">กระดาษ</option><option value="0.3">อะลูมิเนียม</option><option value="0.08">ตะกั่ว</option></select></label>
+  <div class="dose-card"><span>ค่าดัชนีการรับรังสีจำลอง</span><strong id="dose">0</strong><small>ใช้เพื่อเปรียบเทียบในการเรียนเท่านั้น ไม่ใช่ค่าทางการแพทย์</small></div><div id="safetyAdvice" class="knowledge-card"></div>
+  <div class="warning-grid"><div><b>การได้รับรังสีภายนอก</b><span>แหล่งรังสีอยู่นอกร่างกาย ลดได้ด้วยเวลา ระยะทาง และกำบัง</span></div><div><b>การปนเปื้อน</b><span>สารกัมมันตรังสีติดผิว เสื้อผ้า หรือเข้าสู่ร่างกาย ต้องควบคุมพื้นที่และกำจัดการปนเปื้อน</span></div></div>
+  <details><summary>สถานการณ์ฉุกเฉิน</summary><ol><li>อย่าสัมผัสหรือเคลื่อนย้ายวัตถุต้องสงสัย</li><li>ถอยห่างและกันคนออกจากพื้นที่</li><li>แจ้งครู เจ้าหน้าที่ หรือหน่วยงานที่รับผิดชอบ</li><li>ปฏิบัติตามคำสั่งผู้เชี่ยวชาญ ไม่ทดลองตรวจเอง</li></ol></details>
+  <button id="safetyTask" class="primary">ตรวจภารกิจความปลอดภัย</button>
+</article>
 
-        <article class="page" data-page-panel="applications">
-          <div class="section-heading"><span>บทที่ 5</span><h2>การใช้ประโยชน์ของไอโซโทป</h2></div>
-          <div id="applicationCards" class="application-grid"></div>
-          <p>แตะการ์ดเพื่ออ่านข้อมูล แล้วจับคู่ไอโซโทปกับการใช้งาน</p>
-          <div id="applicationQuiz" class="quiz-box"></div>
-          <button id="newApplication" class="primary">โจทย์จับคู่ใหม่</button>
-        </article>
+<article class="page" data-page-panel="challenge">
+  <div class="section-heading"><span>บทสุดท้าย</span><h2>ภารกิจนักวิทยาศาสตร์นิวเคลียร์</h2></div>
+  <p>ภารกิจสรุปจะสุ่มคำถามจากทุกบท นักเรียนควรทดลองทุกเมนูก่อนเริ่มทำ เพื่อสะสมคะแนนและปลดล็อกใบประกาศ</p>
+  <div class="progress-wrap"><div><span>ความก้าวหน้า</span><b id="progressText">0/6 ภารกิจ</b></div><div class="progress"><i id="progressFill"></i></div></div>
+  <div class="mastery-grid"><div><b>ภารกิจ 1</b><span>เลือกวัสดุกำบังรังสี</span></div><div><b>ภารกิจ 2</b><span>คำนวณครึ่งชีวิต</span></div><div><b>ภารกิจ 3</b><span>ดุลสมการนิวเคลียร์</span></div><div><b>ภารกิจ 4</b><span>แยกฟิชชันและฟิวชัน</span></div><div><b>ภารกิจ 5</b><span>จับคู่ไอโซโทป</span></div><div><b>ภารกิจ 6</b><span>ตัดสินใจด้านความปลอดภัย</span></div></div>
+  <div id="challengeBox" class="quiz-box"></div><button id="nextChallenge" class="primary">เริ่มภารกิจสรุป</button><button id="resetProgress" class="danger small">ล้างความก้าวหน้า</button>
+  <div class="glossary"><h3>อภิธานศัพท์</h3><div><b>ไอโซโทป</b><span>อะตอมของธาตุเดียวกันที่มีโปรตอนเท่ากันแต่นิวตรอนต่างกัน</span></div><div><b>กัมมันตภาพ</b><span>อัตราการสลายของนิวเคลียสต่อหน่วยเวลา</span></div><div><b>ครึ่งชีวิต</b><span>เวลาที่ทำให้จำนวนนิวเคลียสที่ยังไม่สลายเหลือครึ่งหนึ่ง</span></div><div><b>มวลวิกฤต</b><span>มวลขั้นต่ำที่ทำให้ปฏิกิริยาลูกโซ่ดำเนินต่อได้</span></div><div><b>มวลพร่อง</b><span>ผลต่างของมวลก่อนและหลังปฏิกิริยาที่เปลี่ยนเป็นพลังงาน</span></div></div>
+  <div id="certificate" class="certificate hidden"><div>☢</div><h3>ใบประกาศนักวิทยาศาสตร์นิวเคลียร์</h3><p>มอบให้แก่</p><strong id="certificateName">ผู้เรียน</strong><p>ผ่านภารกิจ Nuclear Quest 3D</p><button id="printCertificate">พิมพ์ใบประกาศ</button></div>
+</article>
 
-        <article class="page" data-page-panel="safety">
-          <div class="section-heading"><span>บทที่ 6</span><h2>ความปลอดภัยจากรังสี</h2></div>
-          <div class="safety-principles"><div>⏱<b>เวลา</b><span>ลดเวลาที่สัมผัส</span></div><div>↔<b>ระยะทาง</b><span>เพิ่มระยะห่าง</span></div><div>🛡<b>กำบัง</b><span>เลือกวัสดุให้เหมาะสม</span></div></div>
-          <label>เวลาอยู่ในพื้นที่ <span id="exposureTimeValue">10</span> นาที<input id="exposureTime" type="range" min="1" max="120" value="10"></label>
-          <label>ระยะห่าง <span id="distanceValue">2</span> เมตร<input id="distance" type="range" min="0.5" max="10" step="0.5" value="2"></label>
-          <label>วัสดุกำบัง<select id="safetyShield"><option value="1">ไม่มี</option><option value="0.7">กระดาษ</option><option value="0.3">อะลูมิเนียม</option><option value="0.08">ตะกั่ว</option></select></label>
-          <div class="dose-card"><span>ค่าดัชนีการรับรังสีจำลอง</span><strong id="dose">0</strong><small>ใช้เพื่อเปรียบเทียบในการเรียนเท่านั้น ไม่ใช่ค่าทางการแพทย์</small></div>
-          <div id="safetyAdvice" class="knowledge-card"></div>
-          <button id="safetyTask" class="primary">ตรวจภารกิจความปลอดภัย</button>
-        </article>
-
-        <article class="page" data-page-panel="challenge">
-          <div class="section-heading"><span>บทสุดท้าย</span><h2>ภารกิจนักวิทยาศาสตร์นิวเคลียร์</h2></div>
-          <div class="progress-wrap"><div><span>ความก้าวหน้า</span><b id="progressText">0/6 ภารกิจ</b></div><div class="progress"><i id="progressFill"></i></div></div>
-          <div id="challengeBox" class="quiz-box"></div>
-          <button id="nextChallenge" class="primary">เริ่มภารกิจสรุป</button>
-          <button id="resetProgress" class="danger small">ล้างความก้าวหน้า</button>
-          <div id="certificate" class="certificate hidden"><div>☢</div><h3>ใบประกาศนักวิทยาศาสตร์นิวเคลียร์</h3><p>มอบให้แก่</p><strong id="certificateName">ผู้เรียน</strong><p>ผ่านภารกิจ Nuclear Quest 3D</p><button id="printCertificate">พิมพ์ใบประกาศ</button></div>
-        </article>
-      </section>
-    </main>
-
-    <footer>สื่อจำลองเพื่อการศึกษา • ห้ามใช้แทนคำแนะนำด้านความปลอดภัยทางรังสีจากผู้เชี่ยวชาญ</footer>
-  </div>
-  <script type="module" src="script.js"></script>
-</body>
-</html>
+</section></main>
+<footer>สื่อจำลองเพื่อการศึกษา • ค่า CPM และดัชนีรังสีเป็นค่าจำลอง • ห้ามใช้แทนเครื่องมือวัดหรือคำแนะนำจากผู้เชี่ยวชาญ</footer>
+</div><script type="module" src="script.js"></script>
+</body></html>
